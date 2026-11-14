@@ -157,8 +157,8 @@ const moduleData=[
 ];
 DATA.topics=moduleData;
 const storedPref=JSON.parse(localStorage.getItem('gt-pref')||'null');if(storedPref&&Array.isArray(storedPref.ids)){const ids=storedPref.ids,oldAll=['arcos','funcoes','trig-retangulo','quadrilateros','poligonos'];if(ids.some(x=>oldAll.includes(x))){const mapped=[];if(ids.some(x=>['arcos','funcoes'].includes(x)))mapped.push('trig');if(ids.includes('trig-retangulo'))mapped.push('relacoes');if(ids.includes('quadrilateros'))mapped.push('quadrilateros');if(ids.includes('poligonos'))mapped.push('poligonos');storedPref.ids=mapped.length?mapped:moduleData.map(t=>t.id);localStorage.setItem('gt-pref',JSON.stringify(storedPref));}}
-activeTopics=function(){const p=JSON.parse(localStorage.getItem('gt-pref')||'null');return DATA.topics.filter(t=>!p||!Array.isArray(p.ids)||p.ids.includes(t.id));};
-state.modules=state.modules||{};state.done=state.done||{};state.answers=state.answers||{};if(state.learningVersion!==3){state.done={};state.modules={};state.learningVersion=3;const allPref=JSON.parse(localStorage.getItem('gt-pref')||'{}');allPref.ids=moduleData.map(t=>t.id);allPref.minutes=allPref.minutes||25;localStorage.setItem('gt-pref',JSON.stringify(allPref));save();}
+activeTopics=function(){return DATA.topics;};
+state.modules=state.modules||{};state.done=state.done||{};state.answers=state.answers||{};if(state.learningVersion!==3){state.done={};state.modules={};state.learningVersion=3;const allPref=JSON.parse(localStorage.getItem('gt-pref')||'{}');allPref.ids=moduleData.map(t=>t.id);allPref.minutes=allPref.minutes||25;localStorage.setItem('gt-pref',JSON.stringify(allPref));save();}const allTopicsPref=JSON.parse(localStorage.getItem('gt-pref')||'{}');allTopicsPref.ids=moduleData.map(t=>t.id);allTopicsPref.minutes=allTopicsPref.minutes||25;localStorage.setItem('gt-pref',JSON.stringify(allTopicsPref));
 let flow=null;
 function persistFlow(){if(flow){state.modules[flow.id]={...flow};save();}}
 function showSteps(active){return `<div class="flow-steps"><span class="${active==='level'?'current':''}">01 Nível</span><span class="${active==='summary'?'current':''}">02 Resumo</span><span class="${active==='quiz'?'current':''}">03 Quiz</span><span class="${active==='exercises'?'current':''}">04 Exercícios</span><span class="${active==='results'||active==='review'?'current':''}">05 Revisão</span></div>`;}
@@ -204,6 +204,7 @@ save();dashboard();
 const previousDashboardForScroll=dashboard;dashboard=function(){previousDashboardForScroll();const scrollableTrail=document.querySelector(".map");if(scrollableTrail){const steps=[...scrollableTrail.querySelectorAll(".module-node")].reverse();steps.forEach(step=>scrollableTrail.append(step));scrollableTrail.setAttribute("tabindex","0");scrollableTrail.setAttribute("role","region");scrollableTrail.setAttribute("aria-label","Trilha de aprendizagem. Role para cima para ver os próximos módulos.");scrollableTrail.scrollTop=scrollableTrail.scrollHeight;}};
 if(account&&sessionStorage.getItem("gt-session")==="1")dashboard();else authScreen("login");
 </script></body></html>
+
 
 
 
